@@ -1,0 +1,40 @@
+#注意此文件并非脚本，而是源码安装和使用带stream模块的nginx示例。
+
+#安装依赖
+sudo apt install build-essential -y
+sudo apt install libpcre3 libpcre3-dev -y
+sudo apt install libssl-dev -y
+sudo apt install zlib1g-dev -y
+
+#下载源码，并解压
+sudo wget http://nginx.org/download/nginx-1.24.0.tar.gz 
+sudo tar -zxvf nginx-1.24.0.tar.gz 
+cd nginx-1.24.0
+
+#编译二进制，将stream等模块静态编译进二进制
+sudo ./configure --prefix=/usr/local/nginx \
+                 --with-http_ssl_module \
+                 --with-stream \
+                 --with-stream_ssl_module \
+                 --with-stream_realip_module \
+                 --with-compat \
+                 --with-pcre-jit
+sudo make
+sudo make install
+
+#验证，注意这样编译好的二进制在nginx-1.24.0/objs 目录下，
+$ sudo ./nginx -V
+nginx version: nginx/1.24.0
+built by gcc 13.2.0 (Ubuntu 13.2.0-23ubuntu4)
+built with OpenSSL 3.0.13 30 Jan 2024
+TLS SNI support enabled
+configure arguments: --prefix=/usr/local/nginx --with-http_ssl_module --with-stream --with-stream_ssl_module --with-stream_realip_module --with-compat --with-pcre-jit
+
+#默认的prefix路径可能和命令行安装也有差别，启动二进制可以使用-c 指定配置文件,注意删除load_module modules/ngx_stream_module.so;配置。
+$ sudo ./nginx  -c  /home/youpeng/nginx-1.24.0/objs/nginx.conf
+
+#验证进程启动是否成功
+$ ps -ef | grep nginx
+root       16281       1  0 14:51 ?        00:00:00 nginx: master process ./nginx -c /home/youpeng/nginx-1.24.0/objs/nginx.conf
+nobody     16282   16281  0 14:51 ?        00:00:00 nginx: worker process
+nobody     16283   16281  0 14:51 ?        00:00:00 nginx: worker process
