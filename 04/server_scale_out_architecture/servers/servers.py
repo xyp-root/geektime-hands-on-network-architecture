@@ -39,19 +39,6 @@ def start_tcp_server(port):
         client_socket.close()
 
 
-# 启动 UDP 服务器
-def start_udp_server(port):
-    print(f"Starting UDP server on port {port}...")
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_socket.bind(('127.0.0.1', port))
-    print(f"UDP server on port {port} started.")
-
-    while True:
-        message, _ = server_socket.recvfrom(1024)
-        response_message = f"UDP Server on {port}\n"
-        server_socket.sendto(response_message.encode(), _)
-
-
 # 启动所有服务
 def start_servers():
     # 启动 HTTP 服务器
@@ -70,16 +57,8 @@ def start_servers():
         process.start()
         tcp_processes.append(process)
 
-    # 启动 UDP 服务器
-    udp_ports = [6081, 6082, 6083]
-    udp_processes = []
-    for port in udp_ports:
-        process = multiprocessing.Process(target=start_udp_server, args=(port,))
-        process.start()
-        udp_processes.append(process)
-
     # 等待所有进程结束
-    for process in http_processes + tcp_processes + udp_processes:
+    for process in http_processes + tcp_processes:
         process.join()
 
 
