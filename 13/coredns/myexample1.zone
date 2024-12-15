@@ -1,0 +1,16 @@
+$ sudo cat /etc/coredns/myexample1.zone
+; Zone file for myexample1.com
+$TTL 86400
+
+@    IN    SOA   ns1.myexample1.local. admin.myexample1.local. (
+             2024121501 ; Serial
+             3600       ; Refresh
+             1800       ; Retry
+             1209600    ; Expire
+             86400 )    ; Minimum TTL
+
+@    IN    NS    ns1.myexample1.local.
+ns1  IN    A     127.0.0.1
+
+; CNAME record for myexample1.com, pointing to example.com
+myexample1.com.   IN    CNAME   example.com.

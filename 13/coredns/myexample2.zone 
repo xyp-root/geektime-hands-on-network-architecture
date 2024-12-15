@@ -1,0 +1,16 @@
+$ sudo cat /etc/coredns/myexample2.zone
+; Zone file for myexample2.com
+$TTL 10  ; 设置默认的 TTL 为 10 秒
+
+@    IN    SOA   ns1.myexample2.local. admin.myexample2.local. (
+             2024121501 ; Serial
+             3600       ; Refresh
+             1800       ; Retry
+             1209600    ; Expire
+             86400 )    ; Minimum TTL
+
+@    IN    NS    ns1.myexample2.local.
+ns1  IN    A     127.0.0.1
+
+; A record for myexample2.com with IP address 6.6.6.6
+myexample2.com.    IN    A       6.6.6.6

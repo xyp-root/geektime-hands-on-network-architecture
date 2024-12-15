@@ -1,0 +1,7 @@
+myexample1.com:5300 {
+    file /etc/coredns/myexample1.zone
+}
+
+myexample2.com:5300 {
+    file /etc/coredns/myexample2.zone
+}
