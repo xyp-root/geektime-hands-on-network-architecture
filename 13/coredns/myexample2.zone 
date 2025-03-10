@@ -1,4 +1,3 @@
-$ sudo cat /etc/coredns/myexample2.zone
 ; Zone file for myexample2.com
 $TTL 10  ; 设置默认的 TTL 为 10 秒
 

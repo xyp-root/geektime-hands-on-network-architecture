@@ -1,4 +1,3 @@
-$ sudo cat /etc/coredns/myexample1.zone
 ; Zone file for myexample1.com
 $TTL 86400
 
